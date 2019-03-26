@@ -1,0 +1,134 @@
+#
+# For more information see https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+#
+# However, do not include entire blocks here just because you want to change them.
+# Include only the specific lines that you're changing from the defaults.
+
+inherit_from: .rubocop_todo.yml
+
+require:
+ - ./lib/rubocop/cop/sidekiq_testing.rb
+
+AllCops:
+  TargetRubyVersion: 2.5
+  CacheRootDirectory: ./tmp/cache
+  Exclude:
+    - 'config/deploy.rb'
+    - 'config/deploy/**/*'
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+    - 'lib/capistrano/tasks/warn.rake'
+    - 'config/initializers/net_http_with_domain.rb'
+    - 'lib/looker_embed_client.rb'
+
+Performance:
+  enabled: true
+
+Layout/AlignParameters:
+  Exclude:
+    - 'db/fixtures/**/*.rb'
+
+Lint/HandleExceptions:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Naming:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+  IgnoredMethods:
+    - let
+    - let!
+    - subject
+  Exclude:
+    - 'test/factories/**/*.rb'
+    - 'app/graphql/**/*.rb' # GraphQL generators use do/end
+
+Style/BracesAroundHashParameters:
+  Exclude:
+    - 'db/fixtures/**/*.rb'
+    - 'db/seeds/**/*.seeds.rb'
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Rails/FilePath:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+Rails/Output:
+  Exclude:
+    - 'db/**/*.rb'
+    - 'lib/estate_sales_net.rb'
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+# While I believe this is a good idea, changing the behavior here seems
+# dangerous without careful testing.
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Exclude:
+    - 'test/integration/**/*.rb' # Capybara has a #find_by_id method
+    - 'app/models/buyer_invoice.rb' # find_by_number class method
+
+Rails/UnknownEnv:
+  Enabled: false
+
+# We should be able to ¯\_(ツ)_/¯
+Style/AsciiComments:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+# This is something I'd rather not address right now. It's a ruby 2.3 feature.
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# In a few places we rely on these constants being mutable.
+Style/MutableConstant:
+  Exclude:
+    - 'config/initializers/constants.rb'
+
+# Realistically this isn't going to happen.
+Style/Documentation:
+  Enabled: false
+
+# This is very rarely used and there is not consensus on which style is "better"
+Style/FormatStringToken:
+  Exclude:
+    - 'config/routes.rb'
