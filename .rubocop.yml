@@ -4,11 +4,6 @@
 # However, do not include entire blocks here just because you want to change them.
 # Include only the specific lines that you're changing from the defaults.
 
-inherit_from: .rubocop_todo.yml
-
-require:
- - ./lib/rubocop/cop/sidekiq_testing.rb
-
 AllCops:
   TargetRubyVersion: 2.5
   CacheRootDirectory: ./tmp/cache
@@ -132,3 +127,10 @@ Style/Documentation:
 Style/FormatStringToken:
   Exclude:
     - 'config/routes.rb'
+
+# Offense count: 767
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect, EnforcedStyle.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Enabled: false
