@@ -28,12 +28,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   describe 'emails' do
-    it 'require non-blank email addresses' do
+    it 'should be present (nonblank)' do
       user = build(:user, email: '')
       assert_not user.valid?
     end
 
-    it 'limit email length' do
+    it 'should have maximum length' do
       user = build(:user, email: 'a@' + 'a' * 254)
       assert_not user.valid?
     end
@@ -50,6 +50,20 @@ class UserTest < ActiveSupport::TestCase
       create(:user, username: 'noah', email: 'a@a')
       duplicate_email = build(:user, username: 'bogart', email: 'a@a')
       assert_not duplicate_email.valid?
+    end
+  end
+
+  describe 'passwords' do
+    it 'should be present (nonblank)' do
+      pwd = ' ' * 12
+      user = build(:user, password: pwd, password_confirmation: pwd)
+      assert_not user.valid?
+    end
+
+    it 'should have a minimum length' do
+      pwd = 'a' * 11
+      user = build(:user, password: pwd, password_confirmation: pwd)
+      assert_not user.valid?
     end
   end
 end
