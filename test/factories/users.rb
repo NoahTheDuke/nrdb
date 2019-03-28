@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
     username { 'noahtheduke' }
-    email { "#{SecureRandom.uuid}@example.com" }
-    password { '012345678901' }
-    password_confirmation { '012345678901' }
+    email { 'nbtheduke@gmail.com' }
+    password { 'password1234' }
+    password_confirmation { 'password1234' }
   end
 end

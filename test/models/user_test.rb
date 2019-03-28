@@ -6,6 +6,11 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?
   end
 
+  it 'authenticated? should return false for a user with nil digest' do
+    user = create(:user)
+    assert_not user.authenticated?('')
+  end
+
   describe 'usernames' do
     it 'require non-blank usernames' do
       user = build(:user, username: '')
