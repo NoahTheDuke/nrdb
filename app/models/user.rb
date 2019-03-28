@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_secure_password
+
   validates :username, presence: true,
                        length: { minimum: 3, maximum: 20 },
                        uniqueness: { case_sensitive: false }
@@ -16,5 +18,13 @@ class User < ApplicationRecord
     email.downcase!
   end
 
-  has_secure_password
+  # Returns the hash digest of the given string.
+  def self.digest(string)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
+    BCrypt::Password.create(string, cost: cost)
+  end
 end
