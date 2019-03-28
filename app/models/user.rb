@@ -14,7 +14,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
 
   validates :password, presence: true,
-                       length: { minimum: 12 }
+                       length: { minimum: 12 },
+                       allow_nil: true
 
   before_save do
     email.downcase!
