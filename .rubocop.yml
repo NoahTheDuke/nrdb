@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.5
   CacheRootDirectory: ./tmp/cache
@@ -9,107 +11,14 @@ AllCops:
     - 'bin/**/*'
     - 'node_modules/**/*'
 
-Performance:
-  enabled: true
+Metrics/LineLength:
+  Max: 88
 
-Layout/AlignParameters:
-  Exclude:
-    - 'db/fixtures/**/*.rb'
-
-Lint/HandleExceptions:
-  Enabled: false
-
-Lint/AmbiguousBlockAssociation:
+Style/Documentation:
   Enabled: false
 
 Metrics/AbcSize:
   Enabled: false
 
-Metrics/LineLength:
-  Enabled: false
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/BlockLength:
-  Enabled: false
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Naming:
-  Enabled: false
-
-Style/BlockDelimiters:
-  EnforcedStyle: semantic
-  IgnoredMethods:
-    - let
-    - let!
-    - subject
-  Exclude:
-    - 'test/factories/**/*.rb'
-
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'db/fixtures/**/*.rb'
-    - 'db/seeds/**/*.seeds.rb'
-
-Style/TrailingCommaInArrayLiteral:
-  EnforcedStyleForMultiline: comma
-
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: comma
-
-Rails/FilePath:
-  Enabled: false
-
-Rails/LexicallyScopedActionFilter:
-  Enabled: false
-
-Rails/Output:
-  Exclude:
-    - 'db/**/*.rb'
-    - 'lib/estate_sales_net.rb'
-
-Rails/SkipsModelValidations:
-  Enabled: false
-
-Rails:
-  Enabled: true
-
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
-
-Rails/HttpPositionalArguments:
-  Enabled: false
-
-Rails/DynamicFindBy:
-  Exclude:
-    - 'test/integration/**/*.rb'
-    - 'app/models/buyer_invoice.rb'
-
-Rails/UnknownEnv:
-  Enabled: false
-
-Style/AsciiComments:
-  Enabled: false
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/MutableConstant:
-  Exclude:
-    - 'config/initializers/constants.rb'
-
-Style/Documentation:
-  Enabled: false
-
-Style/FormatStringToken:
-  Exclude:
-    - 'config/routes.rb'
-
-Style/ClassAndModuleChildren:
+Metrics/MethodLength:
   Enabled: false

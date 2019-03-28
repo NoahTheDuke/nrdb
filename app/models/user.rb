@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
 
   validates :username, presence: true,
                        length: { minimum: 3, maximum: 20 },
@@ -17,9 +19,8 @@ class User < ApplicationRecord
                        length: { minimum: 12 },
                        allow_nil: true
 
-  before_save do
-    email.downcase!
-  end
+  before_create :create_activation_digest
+  before_save :downcase_email
 
   # Remembers a user in the database for use in persistent sessions
   def remember
@@ -28,9 +29,10 @@ class User < ApplicationRecord
   end
 
   # Returns true if the given token matches the digest
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  def authenticated?(attr, token)
+    digest = send("#{attr}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # Forgets a user
@@ -51,5 +53,18 @@ class User < ApplicationRecord
   # Returns a random token
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  private
+
+  # Converts email to all lower-case
+  def downcase_email
+    email.downcase!
+  end
+
+  # Creates and assigns the activation token and digest
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end
