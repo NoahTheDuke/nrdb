@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 class SessionsHelperTest < ActionView::TestCase
@@ -7,7 +5,7 @@ class SessionsHelperTest < ActionView::TestCase
     user = create(:user)
     remember(user)
     assert_equal user, current_user
-    assert is_logged_in?
+    assert logged_in?
   end
 
   it 'current_user returns nil when remember digest is wrong' do

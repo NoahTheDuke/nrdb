@@ -6,7 +6,7 @@ AllCops:
   Exclude:
     - 'config/deploy.rb'
     - 'config/deploy/**/*'
-    - 'db/schema.rb'
+    - 'db/**/*'
     - 'vendor/**/*'
     - 'bin/**/*'
     - 'node_modules/**/*'
@@ -21,4 +21,19 @@ Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: comma
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Naming/PredicateName:
+  Enabled: true
+
+Metrics/BlockLength:
   Enabled: false
