@@ -19,7 +19,7 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.text :title, null: false
       t.integer :trash_cost
       t.text :type, null: false
-      t.boolean :unique, null: false
+      t.boolean :uniqueness, null: false
 
       t.timestamps
     end

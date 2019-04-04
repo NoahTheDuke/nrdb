@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20190403210706) do
     t.text "title", null: false
     t.integer "trash_cost"
     t.text "type", null: false
-    t.boolean "unique", null: false
+    t.boolean "uniqueness", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
