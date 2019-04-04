@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190329015625) do
+ActiveRecord::Schema.define(version: 20190403210706) do
+
+  create_table "cards", force: :cascade do |t|
+    t.integer "advancement_requirement"
+    t.integer "agenda_points"
+    t.integer "base_link"
+    t.integer "cost"
+    t.integer "deck_limit"
+    t.text "faction", null: false
+    t.integer "influence_cost"
+    t.integer "influence_limit"
+    t.integer "memory_cost"
+    t.integer "minimum_deck_size"
+    t.text "side"
+    t.integer "strength"
+    t.text "subtype"
+    t.text "text"
+    t.text "title", null: false
+    t.integer "trash_cost"
+    t.text "type", null: false
+    t.boolean "unique", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
