@@ -1,0 +1,30 @@
+<tr class="<%= cycle('odd', 'even') -%>">
+   <td data-th="Title">
+      <%= link_to card.name, card_path(card.code) %>
+   </td>
+   <td data-th="Faction">
+      <%= card.faction.name %>
+   </td>
+   <td data-th="Cost">
+      <%= card.cost %>
+   </td>
+   <td data-th="Type">
+      <%= card.type.name %>
+   </td>
+   <td data-th="&hellip;">
+      <%= strength_selector(card) %>
+   </td>
+   <td data-th="Subtype">
+      <%= card.subtypes.map(&:name).join(" - ") %>
+   </td>
+   <td data-th="Influence">
+      <% if card.influence_cost and card.influence_cost > 0 %>
+         <span class="influence- card.cssfaction ">
+            <%= raw("&#9679;" * card.influence_cost) %>
+         </span>
+      <% end %>
+   </td>
+   <td data-th="Set">
+      <%= card.side.name %>
+   </td>
+</tr>

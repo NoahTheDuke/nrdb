@@ -12,25 +12,68 @@
 
 ActiveRecord::Schema.define(version: 20190403210706) do
 
-  create_table "cards", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
+
+  create_table "cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "advancement_requirement"
     t.integer "agenda_points"
     t.integer "base_link"
+    t.text "code", null: false
     t.integer "cost"
     t.integer "deck_limit"
-    t.text "faction", null: false
+    t.integer "faction_id"
     t.integer "influence_cost"
     t.integer "influence_limit"
     t.integer "memory_cost"
     t.integer "minimum_deck_size"
-    t.text "side"
+    t.text "name", null: false
+    t.integer "side_id"
     t.integer "strength"
-    t.text "subtype"
     t.text "text"
-    t.text "title", null: false
     t.integer "trash_cost"
-    t.text "type", null: false
-    t.boolean "uniqueness", null: false
+    t.integer "type_id"
+    t.boolean "uniqueness"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["faction_id"], name: "index_cards_on_faction_id"
+    t.index ["side_id"], name: "index_cards_on_side_id"
+    t.index ["type_id"], name: "index_cards_on_type_id"
+  end
+
+  create_table "cards_subtypes", id: false, force: :cascade do |t|
+    t.uuid "card_id", null: false
+    t.integer "subtype_id", null: false
+    t.index ["subtype_id"], name: "index_cards_subtypes_on_subtype_id"
+  end
+
+  create_table "factions", force: :cascade do |t|
+    t.text "code", null: false
+    t.boolean "is_mini", null: false
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sides", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subtypes", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,4 +94,7 @@ ActiveRecord::Schema.define(version: 20190403210706) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "cards", "factions"
+  add_foreign_key "cards", "sides"
+  add_foreign_key "cards", "types"
 end

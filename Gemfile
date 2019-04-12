@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'activerecord-import'
 gem 'bcrypt',                  '3.1.12'
 gem 'bootstrap-sass',          '3.3.7'
 gem 'bootstrap-will_paginate', '1.0.0'
@@ -8,6 +9,7 @@ gem 'edn_turbo',               '0.5.7'
 gem 'faker',                   '1.9.3'
 gem 'jbuilder',                '2.7.0'
 gem 'jquery-rails',            '4.3.1'
+gem 'pg'
 gem 'puma',                    '3.9.1'
 gem 'rails',                   '5.1.6'
 gem 'sass-rails',              '5.0.6'
@@ -18,7 +20,6 @@ gem 'will_paginate',           '3.1.6'
 group :development, :test do
   gem 'byebug',            '9.0.6', platform: :mri
   gem 'factory_bot_rails', '5.0.1'
-  gem 'sqlite3',           '1.3.13'
 end
 
 group :development do
@@ -35,10 +36,6 @@ group :test do
   gem 'minitest-reporters',       '1.1.14'
   gem 'minitest-spec-rails',      '5.5.0'
   gem 'rails-controller-testing', '1.0.2'
-end
-
-group :production do
-  gem 'pg', '0.20.0'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
