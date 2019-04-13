@@ -10,14 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190403210706) do
+ActiveRecord::Schema.define(version: 20190412170429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
   enable_extension "pgcrypto"
 
-  create_table "cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "card_types", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
     t.integer "advancement_requirement"
     t.integer "agenda_points"
     t.integer "base_link"
@@ -34,19 +41,27 @@ ActiveRecord::Schema.define(version: 20190403210706) do
     t.integer "strength"
     t.text "text"
     t.integer "trash_cost"
-    t.integer "type_id"
+    t.integer "card_type_id"
     t.boolean "uniqueness"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["card_type_id"], name: "index_cards_on_card_type_id"
     t.index ["faction_id"], name: "index_cards_on_faction_id"
     t.index ["side_id"], name: "index_cards_on_side_id"
-    t.index ["type_id"], name: "index_cards_on_type_id"
   end
 
   create_table "cards_subtypes", id: false, force: :cascade do |t|
-    t.uuid "card_id", null: false
+    t.integer "card_id", null: false
     t.integer "subtype_id", null: false
     t.index ["subtype_id"], name: "index_cards_subtypes_on_subtype_id"
+  end
+
+  create_table "cycles", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "factions", force: :cascade do |t|
@@ -57,6 +72,44 @@ ActiveRecord::Schema.define(version: 20190403210706) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "nr_set_types", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "nr_sets", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.date "date_release"
+    t.integer "size"
+    t.integer "cycle_id"
+    t.integer "nr_set_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cycle_id"], name: "index_nr_sets_on_cycle_id"
+    t.index ["nr_set_type_id"], name: "index_nr_sets_on_nr_set_type_id"
+  end
+
+  create_table "printings", force: :cascade do |t|
+    t.text "printed_text"
+    t.boolean "printed_uniqueness"
+    t.text "code"
+    t.text "flavor"
+    t.text "illustrator"
+    t.integer "position"
+    t.integer "quantity"
+    t.date "date_release"
+    t.integer "card_id"
+    t.integer "nr_set_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_printings_on_card_id"
+    t.index ["nr_set_id"], name: "index_printings_on_nr_set_id"
+  end
+
   create_table "sides", force: :cascade do |t|
     t.text "code", null: false
     t.text "name", null: false
@@ -65,13 +118,6 @@ ActiveRecord::Schema.define(version: 20190403210706) do
   end
 
   create_table "subtypes", force: :cascade do |t|
-    t.text "code", null: false
-    t.text "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "types", force: :cascade do |t|
     t.text "code", null: false
     t.text "name", null: false
     t.datetime "created_at", null: false
@@ -94,7 +140,11 @@ ActiveRecord::Schema.define(version: 20190403210706) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "cards", "card_types"
   add_foreign_key "cards", "factions"
   add_foreign_key "cards", "sides"
-  add_foreign_key "cards", "types"
+  add_foreign_key "nr_sets", "cycles"
+  add_foreign_key "nr_sets", "nr_set_types"
+  add_foreign_key "printings", "cards"
+  add_foreign_key "printings", "nr_sets"
 end

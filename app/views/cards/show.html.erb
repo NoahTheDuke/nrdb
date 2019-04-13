@@ -12,12 +12,7 @@
       <div>
         <div class="card-info">
           <span class="card-type">
-            <%= @card.type.name -%>
-            <% if @card.subtypes.present? -%>
-              <span class="card-keywords">
-                : <%= @card.subtypes.map(&:name).join(" - ") -%>
-              </span>
-            <% end %>
+            <%= type_builder(@card) -%>
           </span>
           <%= raw(" &bull; ") + "Adv: #{@card.advancement_requirement}" if @card.advancement_requirement.present? -%>
           <%= raw(" &bull; ") + "Score: #{@card.agenda_points}" if @card.agenda_points.present? -%>
@@ -34,9 +29,9 @@
           <%= raw @card.text %>
         </div>
 
-        <%# <div class="card-text border-<%= @card.faction.code %1>"> %>
-        <%#   <%= raw @card.flavor %1> %>
-        <%# </div> %>
+        <div>
+          <%= versions(@card) %>
+        </div>
 
         <%# <div class="card-illustrator"> %>
         <%#   <small> %>

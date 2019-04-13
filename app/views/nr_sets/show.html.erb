@@ -1,0 +1,33 @@
+<p>
+  <strong>Name:</strong>
+  <%= @nr_set.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @nr_set.code %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @nr_set.size %>
+</p>
+
+<p>
+  <strong>Release Date:</strong>
+  <%= @nr_set.date_release %>
+</p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @nr_set.cycle&.name %>
+</p>
+
+<p>
+  <strong>Set Type:</strong>
+  <%= @nr_set.nr_set_type.name %>
+</p>
+
+<%= link_to 'New', new_nr_set_path %> |
+<%= link_to 'Edit', edit_nr_set_path(@nr_set) %> |
+<%= link_to 'Back', nr_sets_path %>

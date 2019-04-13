@@ -1,0 +1,17 @@
+<% provide(:title, 'Cycles') %>
+
+<%= will_paginate %>
+
+<table class="rwd-table table table-striped table-condensed">
+   <thead>
+      <tr>
+         <th>Name</th>
+         <th>Description</th>
+      </tr>
+   </thead>
+   <%= render @cycles %>
+</table>
+
+<%= will_paginate %>
+
+<%= link_to 'New cycle', new_cycle_path %>

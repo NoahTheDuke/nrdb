@@ -16,9 +16,13 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :cards, param: :code, only: %i[index show]
   resources :users
 
   resources :account_activations, only: %i[edit]
   resources :password_resets, only: %i[new create edit update]
+
+  resources :cycles
+  resources :nr_sets
+  resources :nr_set_types
+  resources :cards, param: :code
 end

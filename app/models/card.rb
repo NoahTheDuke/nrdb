@@ -1,10 +1,9 @@
 class Card < ApplicationRecord
-  self.inheritance_column = nil
-
   belongs_to :side
   belongs_to :faction
-  belongs_to :type
+  belongs_to :card_type
   has_and_belongs_to_many :subtypes
+  has_many :printings
 
   validates :code, uniqueness: true
   validates :name, uniqueness: true

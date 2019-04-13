@@ -1,0 +1,13 @@
+<p>
+  <strong>Name:</strong>
+  <%= @cycle.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @cycle.code %>
+</p>
+
+<%= link_to 'New', new_cycle_path %> |
+<%= link_to 'Edit', edit_cycle_path(@cycle) %> |
+<%= link_to 'Back', cycles_path %>
