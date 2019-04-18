@@ -225,31 +225,4 @@ module CardsHelper
     import_sets path
     import_printings path
   end
-
-  def strength_selector(card)
-    if !card.strength.nil?
-      card.strength
-    elsif !card.agenda_points.nil?
-      card.agenda_points
-    elsif !card.trash_cost.nil?
-      card.trash_cost
-    else
-      ''
-    end
-  end
-
-  def type_builder(card)
-    card_type = card.card_type.name
-    if card.subtypes.present?
-      card_type << ': '
-      card_type << card.subtypes.map(&:name).join(' - ')
-    end
-    card_type
-  end
-
-  def versions(card)
-    card.printings.order(:date_release).map do |c|
-      c.nr_set.name
-    end.join(' | ')
-  end
 end

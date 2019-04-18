@@ -12,7 +12,7 @@
       <div>
         <div class="card-info">
           <span class="card-type">
-            <%= type_builder(@card) -%>
+            <%= @card.type_builder -%>
           </span>
           <%= raw(" &bull; ") + "Adv: #{@card.advancement_requirement}" if @card.advancement_requirement.present? -%>
           <%= raw(" &bull; ") + "Score: #{@card.agenda_points}" if @card.agenda_points.present? -%>
@@ -30,7 +30,7 @@
         </div>
 
         <div>
-          <%= versions(@card) %>
+          <%= @card.versions %>
         </div>
 
         <%# <div class="card-illustrator"> %>

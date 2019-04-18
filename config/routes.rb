@@ -24,5 +24,9 @@ Rails.application.routes.draw do
   resources :cycles
   resources :nr_sets
   resources :nr_set_types
-  resources :cards, param: :code
+  resources :cards, param: :code, only: %i[index show]
+
+  get 'card/:nr_set/:position/(/:code)', to: 'printings#show'
+
+  get '/card_images/:nr_set/:code', to: 'images#serve'
 end

@@ -1,6 +1,6 @@
 class NrSetsController < ApplicationController
   def index
-    @nr_sets = NrSet.all.order(:date_release).paginate(page: params[:page])
+    @nr_sets = NrSet.includes(:nr_set_type).all.order(:date_release).paginate(page: params[:page])
   end
 
   def show

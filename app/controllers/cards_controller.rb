@@ -1,6 +1,9 @@
 class CardsController < ApplicationController
   def index
-    @cards = Card.all.order(:code).paginate(page: params[:page])
+    @cards = Card.includes(%i[side faction card_type subtypes])
+                 .all
+                 .order(:code)
+                 .paginate(page: params[:page])
   end
 
   def show

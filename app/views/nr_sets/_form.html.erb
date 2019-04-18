@@ -9,7 +9,7 @@
   <%= f.select :cycle_id,
     options_for_select(
       Cycle.all.order(:name).map { |s| [s.name, s.id] },
-      selected: @nr_set.cycle.id || nil),
+      selected: @nr_set.cycle&.id),
       class: 'form-control',
       include_blank: true
     %>
@@ -24,7 +24,7 @@
   <%= f.select :nr_set_type_id,
     options_for_select(
       NrSetType.all.order(:name).map { |s| [s.name, s.id] },
-      selected: @nr_set.nr_set_type&.id || nil),
+      selected: @nr_set.nr_set_type&.id),
       class: 'form-control',
       include_blank: true
     %>

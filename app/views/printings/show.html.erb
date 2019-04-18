@@ -1,0 +1,71 @@
+<div class="col-sm-4">
+  <img src=<%= "/card_images/#{@printing.nr_set.code}/#{@card.code}.jpg" %>  class="img-responsive" style="margin:auto" />
+</div>
+
+<div class="col-sm-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title card-title">
+        <span class="col-1">
+          <% if @card.uniqueness %>
+            &diams;
+          <% end %>
+          <%= link_to @card.name, @card.code %>
+        </span>
+        <%= raw(" &bull; ") + "Adv: #{@card.advancement_requirement}" if @card.advancement_requirement.present? -%>
+        <%= raw(" &bull; ") + "Cost: #{@card.cost}" if @card.cost.present? -%>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div>
+        <div class="card-info">
+          <span class="card-type">
+            <%= @card.type_builder -%>
+          </span>
+          <%= raw(" &bull; ") + "Score: #{@card.agenda_points}" if @card.agenda_points.present? -%>
+          <%= raw(" &bull; ") + "Strength: #{@card.strength}" if @card.strength.present? -%>
+          <%= raw(" &bull; ") + "Trash: #{@card.trash_cost}" if @card.trash_cost.present? -%>
+
+          <%= raw(" &bull; ") + "Link: #{@card.base_link}" if @card.base_link.present? -%>
+          <%= raw(" &bull; ") + "Deck: #{@card.minimum_deck_size}" if @card.minimum_deck_size.present? -%>
+          <%= raw(" &bull; ") + "Influence: #{@card.influence_limit || raw("&#8734;")}" if @card.influence_limit.present? -%>
+        </div>
+
+        <div class="card-text">
+          <%= raw @card.text %>
+        </div>
+        <div class="card-flavor">
+          <small> <%= @printing.flavor %> </small>
+        </div>
+        <% if @card.influence_cost.present? %>
+           <span class="influence- card.cssfaction ">
+              <%= "Influence: " + ("●" * @card.influence_cost) + ("○" * (5 - @card.influence_cost)) %>
+           </span>
+        <% end %>
+
+        <div class="card-illustrator">
+          <small>
+            <%= @card.faction.name %>
+            <%= raw(" &bull; ") + "#{@printing.illustrator}" if @printing.illustrator.present? %>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= "#{@printing.nr_set.name} (#{@printing.nr_set.code})" %>
+      </h3>
+      <%= raw "##{@printing.position}" + " &bull; " + "English" %>
+    </div>
+    <div class="panel-body">
+      <% @card.versions.each do |printing| %>
+        <%= printing.nr_set.name %>
+      <% end %>
+    </div>
+  </div>
+</div>
