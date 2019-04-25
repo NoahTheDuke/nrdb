@@ -1,6 +1,6 @@
 class CreatePrintings < ActiveRecord::Migration[5.1]
   def change
-    create_table :cycles do |t|
+    create_table :nr_cycles do |t|
       t.text :code, null: false
       t.text :name, null: false
       t.text :description
@@ -21,7 +21,7 @@ class CreatePrintings < ActiveRecord::Migration[5.1]
       t.text :name, null: false
       t.date :date_release
       t.integer :size
-      t.references :cycle, type: :integer, index: true, foreign_key: true
+      t.references :nr_cycle, type: :integer, index: true, foreign_key: true
       t.references :nr_set_type, type: :integer, index: true, foreign_key: true
 
       t.timestamps

@@ -1,13 +1,17 @@
 class NrSetsController < ApplicationController
   def index
-    @nr_sets = NrSet.includes(:nr_set_type).all.order(:date_release).paginate(page: params[:page])
+    @nr_sets = NrSet.includes(:nr_set_type, :nr_cycle)
+                    .all
+                    .order(date_release: :desc)
   end
 
   def show
-    @nr_set = NrSet.find(params[:id])
-    return if @nr_set.present?
+    @printings = Printing.includes(nr_set: [:nr_cycle],
+                                   card: %i[side faction card_type subtypes])
+                         .where(nr_sets: { code: params[:code] })
+                         .merge(Printing.order(position: :asc))
 
-    redirect_to nr_sets_path
+    redirect_to nr_sets_path unless @printings.present?
   end
 
   def new
@@ -15,7 +19,7 @@ class NrSetsController < ApplicationController
   end
 
   def edit
-    @nr_set = NrSet.find(params[:id])
+    @nr_set = NrSet.find_by(code: params[:code])
     return if @nr_set.present?
 
     redirect_to nr_sets_path
@@ -32,7 +36,7 @@ class NrSetsController < ApplicationController
   end
 
   def update
-    @nr_set = NrSet.find(params[:id])
+    @nr_set = NrSet.find_by(code: params[:id])
     if @nr_set.update(nr_set_params)
       flash[:success] = 'Set updated'
       redirect_to @nr_set
@@ -42,9 +46,9 @@ class NrSetsController < ApplicationController
   end
 
   def destroy
-    NrSet.find(params[:id]).destroy
+    NrSet.find_by(code: params[:code]).destroy
     flash[:success] = 'Set deleted'
-    redirect_to cycles_url
+    redirect_to nr_sets_url
   end
 
   private
@@ -54,7 +58,7 @@ class NrSetsController < ApplicationController
   end
 
   def nr_set_params
-    params.require(:nr_set).permit(:code, :name, :cycle_id, :date_release, :size,
+    params.require(:nr_set).permit(:code, :name, :nr_cycle_id, :date_release, :size,
                                    :nr_set_type_id)
   end
 end

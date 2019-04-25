@@ -1,25 +1,23 @@
 <tr class="<%= cycle('odd', 'even') -%>">
    <td data-th="Title">
-      <%= link_to card.name, card_path(card.code) %>
+      <%= link_to printing_path(card.printings.last.nr_set.code, card.printings.last.position, card.code) do %>
+         <%= card.name %>
+      <% end %>
    </td>
    <td data-th="Faction">
-      <%= card.faction.name %>
+      <span class="icon icon-<%= card.faction.code.dasherize %>"></span>
    </td>
    <td data-th="Cost">
       <%= card.cost %>
    </td>
    <td data-th="Type">
-      <%= card.type_builder %>
+      <%= raw card.type_builder %>
    </td>
    <td data-th="&hellip;">
-      <%= card.strength_selector %>
+      <%= raw card.strength_selector %>
    </td>
    <td data-th="Influence">
-      <% if card.influence_cost and card.influence_cost > 0 %>
-         <span class="influence- card.cssfaction ">
-            <%= raw("&#9679;" * card.influence_cost) %>
-         </span>
-      <% end %>
+      <%= raw card.influence_builder %>
    </td>
    <td data-th="Set">
       <%= card.side.name %>

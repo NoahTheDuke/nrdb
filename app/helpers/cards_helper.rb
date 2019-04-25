@@ -127,6 +127,15 @@ module CardsHelper
     end
   end
 
+  def select_cycle_code(code)
+    codes = {
+      'revised-core': 'core2',
+      'napd-multiplayer': 'napd',
+      'system-core-2019': 'sc19',
+    }
+    codes[code] || code
+  end
+
   def import_cycles(path)
     path += 'cycles.edn'
     cycles = nil
@@ -134,15 +143,14 @@ module CardsHelper
       cycles = EDN.read(file)
     end
     cycles
-      .select! { |cy| cy[:size] > 1 }
       .map! do |cy|
       {
-        code: cy[:id],
+        code: select_cycle_code(cy[:id]),
         name: cy[:name],
         description: cy[:description],
       }
     end
-    Cycle.import cycles
+    NrCycle.import cycles
   end
 
   def import_set_types(path)
@@ -162,7 +170,7 @@ module CardsHelper
   end
 
   def import_sets(path)
-    nr_cycles = Cycle.all.index_by(&:code)
+    nr_cycles = NrCycle.all.index_by(&:code)
     nr_set_types = NrSetType.all.index_by(&:code)
 
     path += 'sets.edn'
@@ -177,7 +185,7 @@ module CardsHelper
         size: set[:size]
       )
       new_set.date_release = Date.parse(set[:"date-release"]) if set[:"date-release"]
-      new_set.cycle = nr_cycles[set[:"cycle-id"]] if set[:"cycle-id"]
+      new_set.nr_cycle = nr_cycles[select_cycle_code(set[:"cycle-id"])]
       if set[:"set-type"]
         new_set.nr_set_type = nr_set_types[convert_symbol(set[:"set-type"])]
       end
@@ -224,5 +232,6 @@ module CardsHelper
     import_set_types path
     import_sets path
     import_printings path
+    p 'Done!'
   end
 end

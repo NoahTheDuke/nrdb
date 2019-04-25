@@ -21,12 +21,12 @@ Rails.application.routes.draw do
   resources :account_activations, only: %i[edit]
   resources :password_resets, only: %i[new create edit update]
 
-  resources :cycles
-  resources :nr_sets
+  resources :nr_cycles, param: :code
+  resources :nr_sets, param: :code
   resources :nr_set_types
   resources :cards, param: :code, only: %i[index show]
 
-  get 'card/:nr_set/:position/(/:code)', to: 'printings#show'
+  get 'card/:nr_set/:position/(/:code)', to: 'printings#show', as: 'printing'
 
-  get '/card_images/:nr_set/:code', to: 'images#serve'
+  get '/card_images/:nr_set/:code', to: 'images#serve', as: 'image'
 end

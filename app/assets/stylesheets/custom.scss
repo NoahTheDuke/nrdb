@@ -35,7 +35,7 @@ textarea {
 /* typography */
 
 body {
-    font-size: 16px;
+    font-size: 15px;
     font-family: 'LatoWeb', sans-serif;
 }
 
@@ -58,12 +58,6 @@ h2 {
   font-weight: normal;
   color: $gray-light;
 }
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
-}
-
 
 /* header */
 
@@ -206,4 +200,171 @@ input {
     padding: 10px 0;
     border-bottom: 1px solid $gray-lighter;
   }
+}
+
+//colors
+$blue: blue;
+$red: red;
+$color_vermilion_approx: orangered;
+$royal_blue: royalblue;
+$color_apple_approx: limegreen;
+$gray: gray;
+$color_purple_heart_approx: blueviolet;
+$crimson: crimson;
+$color_pizazz_approx: darkorange;
+$color_japanese_laurel_approx: darkgreen;
+$color_persian_rose_approx: deeppink;
+$color_tuft_bush_approx: #ffd9cc;
+$color_link_water_approx: #d9e1f9;
+$color_blue_romance_approx: #d6f5d6;
+$color_mercury_approx: #e2e5e8;
+$color_snuff_approx: #e7d4f9;
+$color_pastel_pink_approx: #f8d0d8;
+$color_sandy_beach_approx: #ffe8cc;
+$color_tasman_approx: #cce0cc;
+$color_linen_approx: #ffece6;
+$color_selago_approx: #ecf0fc;
+$color_ottoman_approx: #eafaea;
+$color_porcelain_approx: #f0f2f4;
+$color_blue_chalk_approx: #f3eafc;
+$color_carousel_pink_approx: #fbe7eb;
+$color_serenade_approx: #fff3e6;
+$color_gray_nurse_approx: #e6efe6;
+$color_suva_gray_approx: #888;
+
+.card-type {
+  border-bottom:1px solid rgba(0,0,0,1);
+}
+
+.card-title {
+  position: relative;
+  z-index: 10;
+  margin-right: 15px;
+}
+
+.card-text {
+  border-left: 2px solid $color_suva_gray_approx;
+  sup {
+    line-height: 0;
+    font-size: x-small;
+  }
+  p {
+    margin: 6px;
+  }
+}
+
+.card-flavor {
+  font-style: italic;
+}
+
+.card-cost {
+  font-weight: normal;
+  margin: 0 0 0 0.25em;
+}
+
+// Colors
+.pack-future {
+  color: $red;
+}
+
+.card-preview {
+  color: $red;
+}
+
+.color-corp {
+  color: $blue;
+}
+
+.color-runner {
+  color: $red;
+}
+
+.anarch {
+  stroke: $color_vermilion_approx;
+  color: $color_vermilion_approx !important;
+  border-color: $color_vermilion_approx;
+}
+
+.criminal {
+  stroke: $royal_blue;
+  color: $royal_blue !important;
+  border-color: $royal_blue;
+}
+
+.shaper {
+  stroke: $color_apple_approx;
+  color: $color_apple_approx !important;
+  border-color: $color_apple_approx;
+}
+
+.neutral-runner {
+  stroke: $gray;
+  color: $gray !important;
+  border-color: $gray;
+}
+
+.haas-bioroid {
+  stroke: $color_purple_heart_approx;
+  color: $color_purple_heart_approx !important;
+  border-color: $color_purple_heart_approx;
+}
+
+.jinteki {
+  stroke: $crimson;
+  color: $crimson !important;
+  border-color: $crimson;
+}
+
+.nbn {
+  stroke: $color_pizazz_approx;
+  color: $color_pizazz_approx !important;
+  border-color: $color_pizazz_approx;
+}
+
+.weyland-consortium {
+  stroke: $color_japanese_laurel_approx;
+  color: $color_japanese_laurel_approx !important;
+  border-color: $color_japanese_laurel_approx;
+}
+
+.neutral-corp {
+  stroke: $gray;
+  color: $gray !important;
+  border-color: $gray;
+}
+
+.border-anarch {
+  border-color: $color_vermilion_approx;
+}
+
+.border-criminal {
+  border-color: $royal_blue;
+}
+
+.border-shaper {
+  border-color: $color_apple_approx;
+}
+
+.border-neutral-runner {
+  border-color: $gray;
+}
+
+.border-haas-bioroid {
+  border-color: $color_purple_heart_approx;
+}
+
+.border-jinteki {
+  border-color: $crimson;
+}
+
+.border-nbn {
+  border-color: $color_pizazz_approx;
+}
+
+.border-weyland-consortium {
+  border-color: $color_japanese_laurel_approx;
+}
+
+.border-neutral-corp {
+  border-color: $gray;
 }

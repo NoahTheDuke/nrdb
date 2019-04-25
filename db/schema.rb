@@ -56,18 +56,18 @@ ActiveRecord::Schema.define(version: 20190412170429) do
     t.index ["subtype_id"], name: "index_cards_subtypes_on_subtype_id"
   end
 
-  create_table "cycles", force: :cascade do |t|
-    t.text "code", null: false
-    t.text "name", null: false
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "factions", force: :cascade do |t|
     t.text "code", null: false
     t.boolean "is_mini", null: false
     t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "nr_cycles", force: :cascade do |t|
+    t.text "code", null: false
+    t.text "name", null: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,11 +85,11 @@ ActiveRecord::Schema.define(version: 20190412170429) do
     t.text "name", null: false
     t.date "date_release"
     t.integer "size"
-    t.integer "cycle_id"
+    t.integer "nr_cycle_id"
     t.integer "nr_set_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cycle_id"], name: "index_nr_sets_on_cycle_id"
+    t.index ["nr_cycle_id"], name: "index_nr_sets_on_nr_cycle_id"
     t.index ["nr_set_type_id"], name: "index_nr_sets_on_nr_set_type_id"
   end
 
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20190412170429) do
   add_foreign_key "cards", "card_types"
   add_foreign_key "cards", "factions"
   add_foreign_key "cards", "sides"
-  add_foreign_key "nr_sets", "cycles"
+  add_foreign_key "nr_sets", "nr_cycles"
   add_foreign_key "nr_sets", "nr_set_types"
   add_foreign_key "printings", "cards"
   add_foreign_key "printings", "nr_sets"
