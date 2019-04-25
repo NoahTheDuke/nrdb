@@ -23,10 +23,6 @@ module CardsHelper
     subtypes.map(&:to_s).map(&:upcase_first).join(' - ')
   end
 
-  def slugify(string)
-    string
-  end
-
   def import_sides(path)
     path += 'sides.edn'
     sides = nil
@@ -219,19 +215,80 @@ module CardsHelper
     end
   end
 
+  def import_legality_types
+    LegalityType.new(name: 'Legal', code: 'legal').save!
+    LegalityType.new(name: 'Not Legal', code: 'not_legal').save!
+    LegalityType.new(name: 'Restricted', code: 'restricted').save!
+    LegalityType.new(name: 'Banned', code: 'banned').save!
+  end
+
+  def import_formats
+    DeckFormat.new(name: 'Standard', code: 'standard').save!
+    DeckFormat.new(name: 'Eternal', code: 'eternal').save!
+    DeckFormat.new(name: 'Core Experience', code: 'core_experience').save!
+    DeckFormat.new(name: 'Snapshot', code: 'snapshot').save!
+    DeckFormat.new(name: 'Cache Refresh', code: 'cache_refresh').save!
+    DeckFormat.new(name: 'Classic', code: 'classic').save!
+  end
+
+  def select_legality_type(type)
+    if type == :rotated
+      'not_legal'
+    else
+      type.to_s
+    end
+  end
+
+  def select_format(format)
+    formats = {
+      'core-experience': 'core_experience',
+      'socr': 'cache_refresh',
+    }
+    formats[format] || format.to_s
+  end
+
+  def import_card_legalities(path)
+    path += 'raw_data.edn'
+    raw_data = nil
+    File.open(path) do |file|
+      raw_data = EDN.read(file)
+    end
+
+    cards = Card.all.index_by(&:code)
+    types = LegalityType.all.index_by(&:code)
+    formats = DeckFormat.all.index_by(&:code)
+
+    raw_data[:cards].each do |card|
+      card[:format].each do |ff, ll|
+        next if ff == :'snapshot-plus'
+
+        Legality.new(
+          legality_type: types[select_legality_type(ll)],
+          deck_format: formats[select_format(ff)],
+          card: cards[card[:normalizedtitle]]
+        ).save!
+      end
+    end
+  end
+
   def import
     path = '../netrunner-data/edn/'
 
-    import_sides path
-    import_factions path
-    import_types path
-    import_subtypes path
-    import_cards path: path
+    # import_sides path
+    # import_factions path
+    # import_types path
+    # import_subtypes path
+    # import_cards path: path
 
-    import_cycles path
-    import_set_types path
-    import_sets path
-    import_printings path
-    p 'Done!'
+    # import_cycles path
+    # import_set_types path
+    # import_sets path
+    # import_printings path
+
+    import_legality_types
+    import_formats
+    import_card_legalities path
+
+    # p 'Done!'
   end
 end

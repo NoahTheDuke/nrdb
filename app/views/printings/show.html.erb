@@ -68,9 +68,16 @@
       </div>
 
       <hr>
-      <div class="card-legality">
-        Legality:
-      </div>
+      <dl class="card-legality">
+        <% @printing.card.legality.includes(:deck_format, :legality_type).all.each do |ll| %>
+          <div class="card-legality-row">
+            <div class="card-legality-item">
+              <dt><%= ll.deck_format.name %></dt>
+              <dd><%= ll.legality_type.name %></dd>
+            </div>
+          </div>
+        <% end %>
+      </dl>
     </div>
   </div>
 </div>

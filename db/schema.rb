@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412170429) do
+ActiveRecord::Schema.define(version: 20190425174154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,10 +56,35 @@ ActiveRecord::Schema.define(version: 20190412170429) do
     t.index ["subtype_id"], name: "index_cards_subtypes_on_subtype_id"
   end
 
+  create_table "deck_formats", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "factions", force: :cascade do |t|
     t.text "code", null: false
     t.boolean "is_mini", null: false
     t.text "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "legalities", force: :cascade do |t|
+    t.integer "legality_type_id"
+    t.integer "deck_format_id"
+    t.integer "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_legalities_on_card_id"
+    t.index ["deck_format_id"], name: "index_legalities_on_deck_format_id"
+    t.index ["legality_type_id"], name: "index_legalities_on_legality_type_id"
+  end
+
+  create_table "legality_types", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -143,6 +168,9 @@ ActiveRecord::Schema.define(version: 20190412170429) do
   add_foreign_key "cards", "card_types"
   add_foreign_key "cards", "factions"
   add_foreign_key "cards", "sides"
+  add_foreign_key "legalities", "cards"
+  add_foreign_key "legalities", "deck_formats"
+  add_foreign_key "legalities", "legality_types"
   add_foreign_key "nr_sets", "nr_cycles"
   add_foreign_key "nr_sets", "nr_set_types"
   add_foreign_key "printings", "cards"
