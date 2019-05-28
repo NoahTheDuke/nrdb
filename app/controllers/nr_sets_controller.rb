@@ -7,7 +7,7 @@ class NrSetsController < ApplicationController
 
   def show
     @printings = Printing.includes(nr_set: [:nr_cycle],
-                                   card: %i[side faction card_type subtypes])
+                                   card: %i[side faction card_type subtype_relations])
                          .where(nr_sets: { code: params[:code] })
                          .merge(Printing.order(position: :asc))
 

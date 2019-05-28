@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20190425174154) do
     t.text "name", null: false
     t.integer "side_id"
     t.integer "strength"
+    t.text "subtypes"
     t.text "text"
     t.integer "trash_cost"
     t.integer "card_type_id"

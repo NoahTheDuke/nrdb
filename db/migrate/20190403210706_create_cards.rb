@@ -44,6 +44,7 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.text :name, null: false
       t.references :side, type: :integer, index: true, foreign_key: true
       t.integer :strength
+      t.text :subtypes
       t.text :text
       t.integer :trash_cost
       t.references :card_type, type: :integer, index: true, foreign_key: true

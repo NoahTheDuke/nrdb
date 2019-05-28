@@ -3,11 +3,13 @@
     <%= link_to "NetrunnerDB", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to 'Cards', cards_path %></li>
-        <% if logged_in? %>
-        <li><%= link_to 'Cycles', nr_cycles_path %></li>
+        <li>
+          <%= form_tag search_index_path, method: :get, enforce_utf8: false do %>
+            <%= text_field_tag :q, params[:q], placeholder: 'Card Search', class: "navbar-form" %>
+          <% end %>
+        </li>
         <li><%= link_to 'Sets', nr_sets_path %></li>
-        <li><%= link_to 'Set Types', nr_set_types_path %></li>
+        <% if logged_in? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <b class="caret"></b>

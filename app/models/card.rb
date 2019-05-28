@@ -2,7 +2,7 @@ class Card < ApplicationRecord
   belongs_to :side
   belongs_to :faction
   belongs_to :card_type
-  has_and_belongs_to_many :subtypes
+  has_and_belongs_to_many :subtype_relations, class_name: 'Subtype'
   has_many :printings
   has_many :legality
 
@@ -28,7 +28,7 @@ class Card < ApplicationRecord
   def type_builder
     c_type = "<strong>#{card_type.name}"
     c_type << if subtypes.present?
-                ":</strong> #{subtypes.map(&:name).join(' - ')}"
+                ":</strong> #{subtypes}"
               else
                 '</strong>'
               end

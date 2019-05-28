@@ -108,6 +108,7 @@ module CardsHelper
         memory_cost: card[:"memory-cost"],
         minimum_deck_size: card[:"minimum-deck-size"],
         name: card[:title],
+        subtypes: card[:subtype]&.collect { |x| subtypes[convert_symbol(x)].name }&.join(' - '),
         strength: card[:strength],
         text: card[:text],
         trash_cost: card[:"trash-cost"],
@@ -117,7 +118,7 @@ module CardsHelper
       new_card.side = sides[convert_symbol(card[:side])] if card[:side]
       new_card.card_type = types[convert_symbol(card[:type])] if card[:type]
       card[:subtype]&.each do |s|
-        new_card.subtypes << subtypes[convert_symbol(s)]
+        new_card.subtype_relations << subtypes[convert_symbol(s)]
       end
       new_card.save
     end
@@ -150,7 +151,7 @@ module CardsHelper
   end
 
   def import_set_types(path)
-    path += 'set_types.edn'
+    path += 'set-types.edn'
     set_types = nil
     File.open(path) do |file|
       set_types = EDN.read(file)
@@ -278,17 +279,17 @@ module CardsHelper
     # import_factions path
     # import_types path
     # import_subtypes path
-    # import_cards path: path
+    import_cards path: path
 
-    # import_cycles path
-    # import_set_types path
-    # import_sets path
-    # import_printings path
+    import_cycles path
+    import_set_types path
+    import_sets path
+    import_printings path
 
     import_legality_types
     import_formats
     import_card_legalities path
 
-    # p 'Done!'
+    p 'Done!'
   end
 end

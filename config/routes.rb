@@ -25,8 +25,11 @@ Rails.application.routes.draw do
   resources :nr_sets, param: :code
   resources :nr_set_types
   resources :cards, param: :code, only: %i[index show]
+  resources :legality_types
 
-  get 'card/:nr_set/:position/(/:code)', to: 'printings#show', as: 'printing'
+  resources :search, only: [:index]
+
+  get '/card/:nr_set/:position/(/:code)', to: 'printings#show', as: 'printing'
 
   get '/card_images/:nr_set/:code', to: 'images#serve', as: 'image'
 end
